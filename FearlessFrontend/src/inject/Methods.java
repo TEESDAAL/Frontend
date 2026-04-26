@@ -144,7 +144,6 @@ public record Methods(
       .filter(c -> c.name().s().equals("base.Sealed"))
       .count() != 0;
     if (!hasSealed){ return; }
-    // if (d.ms().isEmpty()){ return; } We purposely give error if it is not of form E.Type 
     allCs.stream()
       .filter(c->!c.name().pkgName().equals(d.name().pkgName()))
       .forEach(c->notSealed(c.name(),d));

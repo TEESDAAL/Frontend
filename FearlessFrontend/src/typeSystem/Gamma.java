@@ -35,10 +35,15 @@ public record Gamma(Gamma tail, String name, T t, Change current){
     if (name.equals(x)){ return new Binding(t, current); }
     return tail._bindOrNull(x);
   }
-  public Gamma filterFTV(Literal l){//we only care about dom(bs)
+  public Gamma filterFTV(Literal l){
+    var captureFree= l.cs().stream().anyMatch(c->c.name().s().equals("base.CaptureFree"));
+    return filterFTV(l,captureFree);
+  }
+  private Gamma filterFTV(Literal l,boolean captureFree){//we only care about dom(bs)
     //Γ|Xs= {x : T | x : T ∈ Γ ∧ FTV(T) ⊆ Xs}
     if (this == _empty){ return this; }
-    var rest= tail.filterFTV(l);
+    var rest= tail.filterFTV(l,captureFree);
+    if (captureFree){ return new Gamma(rest, name, t, Change.capFree(l,t)); }
     if (!(current instanceof Change.WithT w)){ return new Gamma(rest, name, t, current); }//core.E.Literal l, core.M m, T atDrop
     if (!hasOnlyFTV(w.currentT(),l.bs())){ return new Gamma(rest, name, t, Change.dropFTV(l, w.currentT())); }
     return new Gamma(rest, name, t, current);

@@ -31,16 +31,22 @@ public sealed interface Change{
   }
   static Change dropFTV(Literal l, T atDrop){
     return new DropFTV(l,atDrop);
+  }
+  static Change capFree(Literal l, T atDrop){
+    return new CapFree(l,atDrop);
   }      
+
   record Same(T currentT) implements WithT{}
   record KeepStrengthenToImm(Literal l, M m, T currentT, WithT tail) implements WithT{}
   record KeepSetToRead(Literal l, M m, T currentT, WithT tail) implements WithT{}
   record KeepSetToReadImm(Literal l, M m, T currentT, WithT tail) implements WithT{}
   sealed interface NoT extends Change{
     Literal l(); T atDrop();
-    <R>R name(R mutInImm, R readHMutH, R fTV);
+    <R> R name(R mutInImm, R readHMutH, R fTV, R capFree);
     }
-  record DropMutInImm(Literal l, T atDrop)implements NoT{ public <R> R name(R a, R b, R c){ return a; } }
-  record DropReadHMutH(Literal l, T atDrop)implements NoT{ public <R> R name(R a, R b, R c){ return b; } }
-  record DropFTV(Literal l, T atDrop)implements NoT{ public <R> R name(R a, R b, R c){ return c; } }
+  record DropMutInImm(Literal l, T atDrop)implements NoT{ public <R> R name(R a, R b, R c, R d){ return a; } }
+  record DropReadHMutH(Literal l, T atDrop)implements NoT{ public <R> R name(R a, R b, R c, R d){ return b; } }
+  record DropFTV(Literal l, T atDrop)implements NoT{ public <R> R name(R a, R b, R c, R d){ return c; } }
+  record CapFree(Literal l, T atDrop)implements NoT{ public <R> R name(R a, R b, R c, R d){ return d; } }
+
 }

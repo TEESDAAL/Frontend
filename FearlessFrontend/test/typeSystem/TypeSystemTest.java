@@ -582,6 +582,23 @@ User:{
 """));
 }
 
+@Test void drop_capFree(){fail("""
+003| Foo:{#(a:A):G->{a}}
+   |      -----------^^
+
+While inspecting parameter "a" > "#" line 3 > "#(_)" line 3
+object literal instance of "iso G" implements "base.CaptureFree".
+Thus parameter "a" (line 3) can not be captured in this scope.
+
+Compressed relevant code with inferred types: (compression indicated by `-`)
+a
+""", List.of("""
+A:{}
+G:base.CaptureFree{ #:A; }
+Foo:{#(a:A):G->{a}}
+""")); }
+
+
 @Test void drop(){fail("""
 007|   read .m(loooooong:mut A):mut A->Do2[mut A]#(
 008|     Capture#({#():base.Void->Ignore#(loooooong)}),

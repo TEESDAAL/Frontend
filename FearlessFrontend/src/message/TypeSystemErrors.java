@@ -218,7 +218,8 @@ public record TypeSystemErrors(Function<TName,Literal> decs, pkgmerge.Package pk
     return why.<Supplier<String>>name(
       ()->whyDropMutInImm(subject,why),
       ()->whyDropReadHMutH(subject,why),
-      ()->whyDropFTV(subject,why)
+      ()->whyDropFTV(subject,why),
+      ()->whyDropCapFree(subject,why)
       ).get();
   }
   private String whyDropMutInImm(String subject, Change.NoT why){
@@ -249,6 +250,13 @@ public record TypeSystemErrors(Function<TName,Literal> decs, pkgmerge.Package pk
     + " and thus it can not be captured.\n"
     + hintAddTypeParameter(why);
   }
+  private String whyDropCapFree(String subject, Change.NoT why){
+    return 
+    err().expRepr(why.l())+" implements \"base.CaptureFree\".\n"
+    + "Thus "+subject
+    +" (line "+why.l().span().inner.startLine()+")"
+    + " can not be captured in this scope.\n";
+  }  
   ///Receiver expression of call c is typed into a type parameter (X / RC X / read/imm X), not a concrete RC C.
   ///Methods cannot be called on type parameters, so this call can never resolve.
   ///Raised when checking method calls.
