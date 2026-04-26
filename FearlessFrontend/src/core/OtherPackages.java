@@ -26,7 +26,7 @@ public interface OtherPackages{
       public  long stamp(){ return newStamp; }
       public  Map<String,Map<String,String>> virtualizationMap(){ return vMap; }
     };}
-  static OtherPackages start(Map<String,Map<String,String>> vMap,List<Literal> core, long newStamp){
+  static OtherPackages start(Map<String,Map<String,String>> vMap,Collection<Literal> core, long newStamp){
     var map= core.stream().collect(Collectors.toUnmodifiableMap (Literal::name, d->d));
     return start(vMap,map,newStamp);
   }

@@ -29,7 +29,6 @@ import utils.Join;
 
 import static offensiveUtils.Require.*;
 
-@SuppressWarnings("exports")
 public class FearlessErrFactory implements ErrFactory<Token,TokenKind,FearlessException,Tokenizer,Parser,FearlessErrFactory>{
   Optional<TName> lastTop= Optional.empty();
   public void noteTop(TName t){ lastTop = Optional.of(t); }

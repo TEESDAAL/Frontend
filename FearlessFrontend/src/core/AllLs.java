@@ -1,12 +1,9 @@
-package typeSystem;
+package core;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import core.E;
-import core.M;
-import core.TName;
 import core.E.*;
 
 public record AllLs(HashMap<TName,Literal> ls) {
