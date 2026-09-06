@@ -60,7 +60,7 @@ public class FearlessErrFactory implements ErrFactory<Token,TokenKind,FearlessEx
     }).addSpan(at);
   }
   public FearlessException topLevelNotATypeDeclaration(Span at, String found){
-    return Code.UnexpectedToken.of(() -> 
+    return Code.UnexpectedToken.of(() ->
       (lastTop.isEmpty() ? "This is not a top level type declaration.\n"
         : "This should probably be inside the declaration of "
         + Err.staticTypeDecName(lastTop.get())
@@ -70,7 +70,7 @@ public class FearlessErrFactory implements ErrFactory<Token,TokenKind,FearlessEx
       + "Found instead: " + Message.displayString(found) + ".\n"
       + "Likely cause: an extra \"}\" closed a type declaration unintentionally.\n"
       ).addSpan(at);
-  }  
+  }
   @Override public FearlessException extraContent(Span from, String what, Collection<TokenKind> expectedTerminatorTokens, Parser parser){
     assert nonNull(from,parser,expectedTerminatorTokens);
     String msg= "Extra content in the current group.\n";
@@ -95,7 +95,7 @@ public class FearlessErrFactory implements ErrFactory<Token,TokenKind,FearlessEx
       "Capability "+rc+"""
        used.
       Capabilities readH and mutH are not allowed on object literals
-      Use one of read, mut, imm, iso.      
+      Use one of read, mut, imm, iso.
       """).addSpan(at);
   }
   public FearlessException disallowedSigRC(Span at, RC rc){
@@ -103,7 +103,7 @@ public class FearlessErrFactory implements ErrFactory<Token,TokenKind,FearlessEx
       "Capability "+rc+"""
        used.
       Capabilities iso, readH and mutH are not allowed on method declarations.
-      Use one of read, mut, imm.      
+      Use one of read, mut, imm.
       """).addSpan(at);
   }
   public FearlessException forgotSpace(Span at,String name){
@@ -156,7 +156,7 @@ public class FearlessErrFactory implements ErrFactory<Token,TokenKind,FearlessEx
   }
   private Span redeclaredMethSpan(List<M> ms,Predicate<M> p, Span at){
     M m= ms.reversed().stream().filter(p).findFirst().get();
-    return m.span().inner;  
+    return m.span().inner;
   }
   private Span redeclaredMethSpan(List<M> ms,Parser.RCMName n, Span at){
     Predicate<M> p= mi->mi.sig()
@@ -186,7 +186,7 @@ public class FearlessErrFactory implements ErrFactory<Token,TokenKind,FearlessEx
   }
   public int parCount(M m){//-1 == explicitly named method
     if (m.sig().isPresent() && m.sig().get().m().isPresent()){ return -1; }
-    return m.sig().map(s->s.parameters().size()).orElse(0) + (m.hasImplicit()?1:0);    
+    return m.sig().map(s->s.parameters().size()).orElse(0) + (m.hasImplicit()?1:0);
   }
   public FearlessException missingDotBeforeMethodName(Span at, String name){
     return Code.WellFormedness.of(
@@ -202,7 +202,7 @@ public class FearlessErrFactory implements ErrFactory<Token,TokenKind,FearlessEx
   }
   public FearlessException methNoNameRedeclared(List<M> ms, List<Integer> noNames, Span at){
     var count= redeclaredElement(noNames);
-    Span s= redeclaredMethSpan(ms,count,at);    
+    Span s= redeclaredMethSpan(ms,count,at);
     List<String> hints= ms.stream()
       .filter(m->parCount(m)==count)
       .flatMap(this::potentialMethodNames)
@@ -247,9 +247,9 @@ public class FearlessErrFactory implements ErrFactory<Token,TokenKind,FearlessEx
       +"\nThere must be no space between the closed curly and the destruct id.")
       .addSpan(at);
   }
-  public FearlessException badBound(T.X name, Span at){  
+  public FearlessException badBound(T.X name, Span at){
     return Code.UnexpectedToken.of("Invalid bound for generic "+Message.displayString(name.name())+"""
-      
+
       Only '*' or '**' are allowed here
       Write: X:*   meaning mut,read,imm
          or: X:**  meaning everything.

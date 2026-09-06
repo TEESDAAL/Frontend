@@ -187,7 +187,7 @@ A:{ .foo:A->B:{'x .foo y,a -> this + x + a; } }
 @Test void method_with_parens_and_ret(){ok("""
 FileFull[[###]decs=[
 Declaration[name=Id/0, bs=Optional.empty, cs=[], l=Literal[
-M[sig=Optional[Sig[rc=Optional.empty, m=Optional[.id], bs=Optional.empty, hasParenthesis=true, 
+M[sig=Optional[Sig[rc=Optional.empty, m=Optional[.id], bs=Optional.empty, hasParenthesis=true,
 parameters=[Parameter[xp=Optional[Name[x=x]],t=Optional[RCC[rc=Optional.empty,c=C[name=X/0,ts=Optional.empty]]]]],t=Optional[RCC[rc=Optional.empty,c=C[name=X/0,ts=Optional.empty]]]]],
 body=Optional[x]]]]]]
 ""","""
@@ -457,7 +457,7 @@ Name "x" is not in scope
 In scope: "this".
 Error 2 UnexpectedToken
 ""","""
-A:{ .m -> 
+A:{ .m ->
 ( (Block#.let x={5}.bar) .use(x) )
  }
 """);}
@@ -474,7 +474,7 @@ Name "x" is not in scope
 In scope: "this".
 Error 2 UnexpectedToken
 ""","""
-A:{ .m -> 
+A:{ .m ->
 (   (  (Block#.let x={5}.bar) .use(x)       )      )
  }
 """);}
@@ -492,7 +492,7 @@ Missing expression after "=" in the equals sugar.
 Use: ".m x = expression" or ".m {a,b} = expression".
 Error 2 UnexpectedToken
 ""","""
-A:{ .m -> 
+A:{ .m ->
 (   (    Block#.let x= .use(x)    )      )
  }
 """);}
@@ -1073,7 +1073,7 @@ Error 2 UnexpectedToken
 """, """
 A:{
   .m:Str ->
-    `bar /* comment 
+    `bar /* comment
     */
 }
 """);
@@ -1280,7 +1280,7 @@ Error 0 Unclosed
 A:{ .m:Str -> "price is } dollars" ) }
 """);}
 
-@Test void eatenCloserInSglQuote_thenWrongCloserParen(){fail(""" 
+@Test void eatenCloserInSglQuote_thenWrongCloserParen(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> `oops } here` ) }
@@ -1292,12 +1292,12 @@ Found a matching closer inside a string literal between here and the stopping po
 Did you mean to place the closer outside the string literal?
 Otherwise expected one of: "}id", "}".
 Error 0 Unclosed
-""",""" 
+""","""
 A:{ .m:Str -> `oops } here` ) }
 """);}
 
 
-@Test void eatenCloserInBlockComment_thenWrongCloserParen(){fail(""" 
+@Test void eatenCloserInBlockComment_thenWrongCloserParen(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> /* } inside */ ) }
@@ -1309,11 +1309,11 @@ Found a matching closer inside a block comment "/* ... */" between here and the 
 Did you mean to place the closer outside the block comment "/* ... */"?
 Otherwise expected one of: "}id", "}".
 Error 0 Unclosed
-""",""" 
+""","""
 A:{ .m:Str -> /* } inside */ ) }
 """);}
 
-@Test void eatenCloserInLineComment_thenWrongCloserParen(){fail(""" 
+@Test void eatenCloserInLineComment_thenWrongCloserParen(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> // } swallowed
@@ -1325,12 +1325,12 @@ Found a matching closer inside a line comment "//" between here and the stopping
 Did you mean to place the closer outside the line comment "//"?
 Otherwise expected one of: "}id", "}".
 Error 0 Unclosed
-""",""" 
+""","""
 A:{ .m:Str -> // } swallowed
 ) }
 """);}
 
-@Test void eatenRoundCloserInString_thenStopByCurly(){fail(""" 
+@Test void eatenRoundCloserInString_thenStopByCurly(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> ( ")]" + " has ) here ) inside" }
@@ -1342,11 +1342,11 @@ Found a matching closer inside a string literal between here and the stopping po
 Did you mean to place the closer outside the string literal?
 Otherwise expected: ")".
 Error 0 Unclosed
-""",""" 
-A:{ .m:Str -> ( ")]" + " has ) here ) inside" } 
+""","""
+A:{ .m:Str -> ( ")]" + " has ) here ) inside" }
 """);}
 
-@Test void eatenSquareCloserInString_thenStopByParen(){fail(""" 
+@Test void eatenSquareCloserInString_thenStopByParen(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> W[ "list ] marker" ) ] }
@@ -1358,7 +1358,7 @@ Found a matching closer inside a string literal between here and the stopping po
 Did you mean to place the closer outside the string literal?
 Otherwise expected: "]".
 Error 0 Unclosed
-""",""" 
+""","""
 A:{ .m:Str -> W[ "list ] marker" ) ] }
 """);}
 
@@ -1378,7 +1378,7 @@ Error 0 Unclosed
 A:{ .m:Str -> { "inner } hidden"
 """);}
 
-@Test void eatenCurlyCloserInBlockComment_thenEOF(){fail(""" 
+@Test void eatenCurlyCloserInBlockComment_thenEOF(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> { /* } hidden */
@@ -1390,11 +1390,11 @@ Found a matching closer inside a block comment "/* ... */" between here and the 
 Did you mean to place the closer outside the block comment "/* ... */"?
 Otherwise expected one of: "}id", "}".
 Error 0 Unclosed
-""",""" 
-A:{ .m:Str -> { /* } hidden */ 
+""","""
+A:{ .m:Str -> { /* } hidden */
 """);}
 
-@Test void eatenSquareCloserInBlockComment_thenWrongCloserCurly(){fail(""" 
+@Test void eatenSquareCloserInBlockComment_thenWrongCloserCurly(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> Foo[ /* ] hidden */ } ]
@@ -1406,11 +1406,11 @@ Found a matching closer inside a block comment "/* ... */" between here and the 
 Did you mean to place the closer outside the block comment "/* ... */"?
 Otherwise expected: "]".
 Error 0 Unclosed
-""",""" 
+""","""
 A:{ .m:Str -> Foo[ /* ] hidden */ } ]
 """);}
 
-@Test void eatenRoundOpenerInDblQuote_thenStrayParen(){fail(""" 
+@Test void eatenRoundOpenerInDblQuote_thenStrayParen(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> "call (" ) }
@@ -1421,11 +1421,11 @@ Unopened ")".
 Found a matching opener hidden inside a string literal before this point.
 Did you mean to place the opener outside the string literal?
 Error 1 Unopened
-""",""" 
+""","""
 A:{ .m:Str -> "call (" ) }
 """);}
 
-@Test void eatenRoundOpenerInLineComment_thenStrayParen(){fail(""" 
+@Test void eatenRoundOpenerInLineComment_thenStrayParen(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> // ( swallowed
@@ -1436,12 +1436,12 @@ Unopened ")".
 Found a matching opener hidden inside a line comment "//" before this point.
 Did you mean to place the opener outside the line comment "//"?
 Error 1 Unopened
-""",""" 
+""","""
 A:{ .m:Str -> // ( swallowed
 ) }
 """);}
 
-@Test void eatenSquareOpenerInBlockComment_thenStrayBracket(){fail(""" 
+@Test void eatenSquareOpenerInBlockComment_thenStrayBracket(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> /* [ hidden */ ] }
@@ -1452,11 +1452,11 @@ Unopened "]".
 Found a matching opener hidden inside a block comment "/* ... */" before this point.
 Did you mean to place the opener outside the block comment "/* ... */"?
 Error 1 Unopened
-""",""" 
+""","""
 A:{ .m:Str -> /* [ hidden */ ] }
 """);}
 
-@Test void eatenCurlyOpenerInDblQuote_thenStrayCurly(){fail(""" 
+@Test void eatenCurlyOpenerInDblQuote_thenStrayCurly(){fail("""
 In file: [###].fear
 
 001| .m:Str -> "start { here" }
@@ -1467,8 +1467,8 @@ Unopened "}".
 Found a matching opener hidden inside a string literal before this point.
 Did you mean to place the opener outside the string literal?
 Error 1 Unopened
-""",""" 
-.m:Str -> "start { here" } 
+""","""
+.m:Str -> "start { here" }
 """);}
 
 @Test void eatenRoundOpenerInBlockComment_thenStrayParenDeep(){fail("""
@@ -1487,7 +1487,7 @@ A:{ .m:Str -> 1 + 2 /* ( */ + 3 ) }
 """);}
 
 
-@Test void runOfRoundClosersBeforeStop(){fail(""" 
+@Test void runOfRoundClosersBeforeStop(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> ((1 + 2)) ) }
@@ -1503,7 +1503,7 @@ Error 2 UnexpectedToken
 A:{ .m:Str -> ((1 + 2)) ) }
 """);}
 
-@Test void runOfSquareClosersBeforeStop(){fail(""" 
+@Test void runOfSquareClosersBeforeStop(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> Foo[Bar] ] ) }
@@ -1514,11 +1514,11 @@ Wrong closer for "{" group.
 Found instead: "]".
 Expected one of: "}id", "}".
 Error 2 UnexpectedToken
-""",""" 
+""","""
 A:{ .m:Str -> Foo[Bar] ] ) }
 """);}
 
-@Test void runOfRoundClosersThenWrongCurly(){fail(""" 
+@Test void runOfRoundClosersThenWrongCurly(){fail("""
 In file: [###].fear
 
 001| A:{ .m(a,b):Str -> (a + b)) }
@@ -1530,11 +1530,11 @@ Found instead: ")".
 This ")" may be unintended.
 Otherwise expected one of: "}id", "}".
 Error 2 UnexpectedToken
-""",""" 
-A:{ .m(a,b):Str -> (a + b)) } 
+""","""
+A:{ .m(a,b):Str -> (a + b)) }
 """);}
 
-@Test void runOfSquareClosersThenWrongParen(){fail(""" 
+@Test void runOfSquareClosersThenWrongParen(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> A[mut,imm]] ) }
@@ -1545,11 +1545,11 @@ Wrong closer for "{" group.
 Found instead: "]".
 Expected one of: "}id", "}".
 Error 2 UnexpectedToken
-""",""" 
+""","""
 A:{ .m:Str -> A[mut,imm]] ) }
 """);}
 
-@Test void runOfRoundClosersNearEOF(){fail(""" 
+@Test void runOfRoundClosersNearEOF(){fail("""
 In file: [###].fear
 
 001| A:{ .m(foo,bar):Str -> (foo + bar))
@@ -1561,11 +1561,11 @@ Found instead: ")".
 This ")" may be unintended.
 Otherwise expected one of: "}id", "}".
 Error 2 UnexpectedToken
-""",""" 
-A:{ .m(foo,bar):Str -> (foo + bar)) 
+""","""
+A:{ .m(foo,bar):Str -> (foo + bar))
 """);}
 
-@Test void runOfSquareClosersNearEOF(){fail(""" 
+@Test void runOfSquareClosersNearEOF(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> A[X,Y,Z]]
@@ -1577,11 +1577,11 @@ Found instead: "]".
 This "]" may be unintended.
 Otherwise expected one of: "}id", "}".
 Error 2 UnexpectedToken
-""",""" 
-A:{ .m:Str -> A[X,Y,Z]] 
+""","""
+A:{ .m:Str -> A[X,Y,Z]]
 """);}
 
-@Test void runOfRoundOpenersBeforeStrayParen(){fail(""" 
+@Test void runOfRoundOpenersBeforeStrayParen(){fail("""
 In file: [###].fear
 
 001| A:{ .m(x,y):Str -> (((x + y))) + 1 ) }
@@ -1593,11 +1593,11 @@ Found instead: ")".
 This ")" may be unintended.
 Otherwise expected one of: "}id", "}".
 Error 2 UnexpectedToken
-""",""" 
+""","""
 A:{ .m(x,y):Str -> (((x + y))) + 1 ) }
 """);}
 
-@Test void runOfSquareOpenersBeforeStrayBracket(){fail(""" 
+@Test void runOfSquareOpenersBeforeStrayBracket(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> A[B[X,Y] , Z ] ] ]{} }
@@ -1608,11 +1608,11 @@ Wrong closer for "{" group.
 Found instead: "]".
 Expected one of: "}id", "}".
 Error 2 UnexpectedToken
-""",""" 
+""","""
 A:{ .m:Str -> A[B[X,Y] , Z ] ] ]{} }
 """);}
 
-@Test void runOfRoundOpenersTightBeforeStrayParen(){fail(""" 
+@Test void runOfRoundOpenersTightBeforeStrayParen(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> (((x))) ) }
@@ -1624,11 +1624,11 @@ Found instead: ")".
 This ")" may be unintended.
 Otherwise expected one of: "}id", "}".
 Error 2 UnexpectedToken
-""",""" 
+""","""
 A:{ .m:Str -> (((x))) ) }
 """);}
 
-@Test void runOfSquareOpenersTightBeforeStrayBracket(){fail(""" 
+@Test void runOfSquareOpenersTightBeforeStrayBracket(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> A[B[X]] ] }
@@ -1640,11 +1640,11 @@ Found instead: "]".
 This "]" may be unintended.
 Otherwise expected one of: "}id", "}".
 Error 2 UnexpectedToken
-""",""" 
+""","""
 A:{ .m:Str -> A[B[X]] ] }
 """);}
 
-@Test void wrongCloser_ParenClosedByBracket(){fail(""" 
+@Test void wrongCloser_ParenClosedByBracket(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> (1 + 2 ] }
@@ -1655,11 +1655,11 @@ Wrong closer for "(" group.
 Found instead: "]".
 Expected: ")".
 Error 2 UnexpectedToken
-""",""" 
+""","""
 A:{ .m:Str -> (1 + 2 ] }
 """);}
 
-@Test void wrongCloser_BracketClosedByParen(){fail(""" 
+@Test void wrongCloser_BracketClosedByParen(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> E[1,2) }
@@ -1670,11 +1670,11 @@ Wrong closer for "[" group.
 Found instead: ")".
 Expected: "]".
 Error 2 UnexpectedToken
-""",""" 
+""","""
 A:{ .m:Str -> E[1,2) }
 """);}
 
-@Test void eofInsideParen(){fail(""" 
+@Test void eofInsideParen(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> (1 + 2
@@ -1685,11 +1685,11 @@ File ended while parsing a "(" group.
 This "(" may be unintended.
 Otherwise expected: ")".
 Error 0 Unclosed
-""",""" 
+""","""
 A:{ .m:Str -> (1 + 2
 """);}
 
-@Test void eofInsideBracket(){fail(""" 
+@Test void eofInsideBracket(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> E[1, 2, 3
@@ -1700,10 +1700,10 @@ File ended while parsing a "[" group.
 This "[" may be unintended.
 Otherwise expected: "]".
 Error 0 Unclosed
-""",""" 
+""","""
 A:{ .m:Str -> E[1, 2, 3
 """);}
-@Test void wrongCloser_CurlyClosedByParen(){fail(""" 
+@Test void wrongCloser_CurlyClosedByParen(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> { x: 1 ) }
@@ -1715,11 +1715,11 @@ Found instead: ")".
 This ")" may be unintended.
 Otherwise expected one of: "}id", "}".
 Error 2 UnexpectedToken
-""",""" 
+""","""
 A:{ .m:Str -> { x: 1 ) }
 """);}
 
-@Test void wrongCloser_CurlyClosedByParen2(){fail(""" 
+@Test void wrongCloser_CurlyClosedByParen2(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> { x: 1 ) }
@@ -1731,12 +1731,12 @@ Found instead: ")".
 This ")" may be unintended.
 Otherwise expected one of: "}id", "}".
 Error 2 UnexpectedToken
-""",""" 
+""","""
 A:{ .m:Str -> { x: 1 ) }
 B:{} C:{}
 """);}
 
-@Test void barrierSemicolonInsideParen(){fail(""" 
+@Test void barrierSemicolonInsideParen(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> ( 1 + 2; ) }
@@ -1747,12 +1747,12 @@ Unclosed "(" group before ";".
 This ";" may be unintended.
 Otherwise expected: ")".
 Error 0 Unclosed
-""",""" 
+""","""
 A:{ .m:Str -> ( 1 + 2; ) }
 """);}
 
 //no repair can conceptually apply
-@Test void nestedWrongCloser_Deep(){fail(""" 
+@Test void nestedWrongCloser_Deep(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> ( Foo[ { a } ) ] }
@@ -1762,11 +1762,11 @@ While inspecting groups of parenthesis
 Unclosed "[" group before "{".
 Expected: "]".
 Error 0 Unclosed
-""",""" 
+""","""
 A:{ .m:Str -> ( Foo[ { a } ) ] }
 """);}
 
-@Test void curlyGroupUnclosedBeforeEOF(){fail(""" 
+@Test void curlyGroupUnclosedBeforeEOF(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> { a: 1, b: 2
@@ -1777,11 +1777,11 @@ File ended while parsing a "{" group.
 This "{" may be unintended.
 Otherwise expected one of: "}id", "}".
 Error 0 Unclosed
-""",""" 
-A:{ .m:Str -> { a: 1, b: 2 
+""","""
+A:{ .m:Str -> { a: 1, b: 2
 """);}
 
-@Test void openerInStringThenEOF_shouldPreferEatenCloser(){fail(""" 
+@Test void openerInStringThenEOF_shouldPreferEatenCloser(){fail("""
 In file: [###].fear
 
 001| A:{ .m:Str -> { "json } aaa"
@@ -1793,17 +1793,17 @@ Found a matching closer inside a string literal between here and the stopping po
 Did you mean to place the closer outside the string literal?
 Otherwise expected one of: "}id", "}".
 Error 0 Unclosed
-""",""" 
-A:{ .m:Str -> { "json } aaa" 
+""","""
+A:{ .m:Str -> { "json } aaa"
 """);}
 
-@Test void pkgName(){ok(""" 
+@Test void pkgName(){ok("""
 FileFull[[###]
 ""","""
-A:{} 
+A:{}
 """);}
 
-@Test void pkgRoleMap(){ok(""" 
+@Test void pkgRoleMap(){ok("""
 FileFull[
 maps=[map goo as boo in foo_bar,map gor as goo in foo],
 uses=[],
@@ -1816,7 +1816,7 @@ A:{}
 
 @Test void tNameWithDot(){ok("""
 [###]
-C[name=foo.Bar/0,ts=Optional.empty]]]]],body=Optional.empty]]]]] 
+C[name=foo.Bar/0,ts=Optional.empty]]]]],body=Optional.empty]]]]]
 ""","""
 A:{ .m: foo.Bar }
 """);}
@@ -1857,7 +1857,7 @@ In file: [###].fear
 While inspecting header element > file header > full file
 Missing "in" keyword.
 Expected: "in".
-Error 2 UnexpectedToken 
+Error 2 UnexpectedToken
 ""","""
 map goo as boo;
 map gor as goo;
@@ -2447,7 +2447,7 @@ Simple string literals are of form " `...` ", not " '...' ";
 that is: use back ticks (`) instead of single quotes (').
 Error 2 UnexpectedToken
 ""","""
-A{ .foo:A -> 
+A{ .foo:A ->
   Block#
   .let foo={'bar'}
   .return {Void}
