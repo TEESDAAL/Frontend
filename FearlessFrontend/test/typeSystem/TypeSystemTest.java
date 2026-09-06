@@ -8,7 +8,7 @@ public class TypeSystemTest extends testUtils.FearlessTestBase{
   static void ok(List<String> input){ typeOk(input); }
   static void fail(String expected, List<String> input){ typeFail(expected, input); }
   static void failExt(String expected, List<String> input){ typeFailRaw(expected, input); }
-   
+
 @Test void tsMiniOk(){ok(List.of("""
 A:{.foo123:A->this.foo123}
 """));}
@@ -296,7 +296,7 @@ A:{ imm .id[X:mut,read](x:X):X->x }
 B:{}
 User:{ imm .m(a:imm A,b:imm B):base.Void->a.id(b); }
 """));}
-//TODO: this used to print, hinting at some other issue in the compact printer 
+//TODO: this used to print, hinting at some other issue in the compact printer
 //mut User:{.m(A,B):-Void->{a.id[mut B](b)}} ?? why mut here? Why meth sig printed as .m(A,B) with no par names
 //but it prints correctly in typeNotWellKinded_literalSupertypeViolatesBounds,.. why??
 
@@ -537,7 +537,7 @@ Apply:{ #(p:imm Person, f:imm F[Person,Car]):Car->f#(p); }
 User:{
   imm .m():Car->Apply#(Person,{_->Foo});
 }
-"""));} 
+"""));}
 @Test void methBodyWrongType_callWrongType_nestedCall(){ fail("""
 006|   imm .m():B->Wrap#(Mk#({}));
    |   ------------^^^^^^^^^^^^--
@@ -1500,7 +1500,7 @@ Compressed relevant code with inferred types: (compression indicated by `-`)
 this.foo123(this)
 """,List.of("""
 A:{
-  .foo123:A->this.foo123; 
+  .foo123:A->this.foo123;
   .bar:A->this.foo123(this);
   .foo123(A,A,A):A->this.foo123;
   }
@@ -1520,7 +1520,7 @@ Compressed relevant code with inferred types: (compression indicated by `-`)
 this.foo123(this)
 """,List.of("""
 A:{
-  .foo123:A->this.foo123; 
+  .foo123:A->this.foo123;
   .bar:A->this.foo123(this      );
   .foo123(A,A,A):A->this.foo123;
   }
@@ -1581,7 +1581,7 @@ Compressed relevant code with inferred types: (compression indicated by `-`)
 this.foo123[read]
 """,List.of("""
 A:{.foo123:A->this.foo123; read .bar:A->this.foo123[read];}
-"""));} 
+"""));}
 
 @Test void tsOkIndirectFail7(){fail("""
 001| A:{mut .foo123:A->this.foo123; imm .bar:A->this.foo123;}
@@ -1868,7 +1868,7 @@ AsRead:{ #(x:read A):read A->x }
 A:{
   .f(aaaa:mut A):read B->read BB:B{read .foo:B->Need#(AsRead#(aaaa));}
 }
-"""));} 
+"""));}
 
 @Test void bestLitName_anonLiteralNoImpl_withMeth(){ok(List.of("""
 A:{}
@@ -2162,7 +2162,7 @@ Box[EE:*]: ToStr[EE]{
   .str by-> by#(this.get).str
   }
 A:ToStr{ .str->Str}
-Top:{ 
+Top:{
   .m00(b:Box[A]):Str -> b.str {::};
   .m01(b:Box[read A]):Str -> b.str {::};
   .m02(b:Box[mut A]):Str -> b.str {::};
@@ -2289,7 +2289,7 @@ Box[EE:*]: Order[Box[EE],EE]{
   .cmp by, a, b, m-> by#(a.get).cmp(a.get[read],b.get[read],m);
   }
 A:Order[A]{ .close->this; .cmp a, b, m-> m.eq}
-Top:{ 
+Top:{
   .m00(b:Box[A]):Bool -> b.order{::} == b;
   .m01(b:Box[read A]):Bool -> b.order{::} == b;
   .m02(b:Box[mut A]):Bool -> b.order{::} == b;
@@ -2384,14 +2384,14 @@ Box[EE:*]: OrderHash[Box[EE],EE]{
   imm  .get: imm EE;
   .close->this;
   .cmp by, a, b, m-> by#(a.get).cmp(a.get[read],b.get[read],m);
-  .hash by, h -> by#(this.get).hash h; 
+  .hash by, h -> by#(this.get).hash h;
   }
 A1:OrderHash[A1]{
   .close -> this;
   .cmp a, b, m -> m.eq;
   .hash h -> 0;
   }
-Top:{ 
+Top:{
   .m00(b:Box[A1]):Bool -> b.order{::} == b;
   .m01(b:Box[read A1]):Bool -> b.order{::} == b;
   .m02(b:Box[mut A1]):Bool -> b.order{::} == b;
@@ -2584,7 +2584,7 @@ A1:OrderHash[A1]{
   .str ->Str;
   .proofConcrete:A1->A1;
 }
-Top:{ 
+Top:{
   .m00(b:Box[A1]):Bool -> b.order{::} == b;
   .m01(b:Box[read A1]):Bool -> b.order{::} == b;
   .m02(b:Box[mut A1]):Bool -> b.order{::} == b;
@@ -2725,7 +2725,7 @@ _Box[E:*]:{
   read .match[R:* ](m: mut BoxMatch[read/imm E, R]): R;
   imm  .match[R:* ](m: mut BoxMatch[imm E, R]): R;
 
-  mut  !: E;  //with only one of the 3 uncommented it works, 
+  mut  !: E;  //with only one of the 3 uncommented it works,
   read !: read/imm E;//with any 2 of them uncommented it fails
   imm  !: imm E;
 }

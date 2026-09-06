@@ -149,7 +149,7 @@ Name clash: name "A" is declared in package "p".
 Name "A" is also used in a "use" directive.
 Error 7 WellFormedness
 """,List.of(
-"use base.Void as A;\nA:{}", 
+"use base.Void as A;\nA:{}",
 "C:{ .f:A->A }"));} // ambiguous A: local and alias
 
 @Test void error_refers_to_alias_without_use_decl(){fail("""
@@ -593,7 +593,7 @@ In file: [###].fear
 
 While inspecting type declaration "B"
 Ambiguous implementation for method ".foo" with 0 parameters.
-Different options are present in the implemented types: 
+Different options are present in the implemented types:
 Candidates: "A2", "A1".
 Type declaration "B" must declare a method ".foo" explicitly implementing the desired behaviour.
 Error 7 WellFormedness
@@ -612,7 +612,7 @@ In file: [###].fear
 
 While inspecting type declaration "B"
 Ambiguous implementation for method ".foo" with 0 parameters.
-Different options are present in the implemented types: 
+Different options are present in the implemented types:
 Candidates: "A2", "A3".
 Type declaration "B" must declare a method ".foo" explicitly implementing the desired behaviour.
 Error 7 WellFormedness
@@ -1212,7 +1212,7 @@ A:{
   mut .h:Age;
 }
 B:A{
-  .h->MyAge:Age{} 
+  .h->MyAge:Age{}
   }
 """));}
 

@@ -54,7 +54,7 @@ Stack[T]: {
   .fold[R](start:R, f: F[R,T,R]): R -> start;
   .map[R](f: F[T, R]): Stack[R] -> {};
   .filter(f: F[T,Bool]): Stack[T]-> {};
-  +(e: T): Stack[T] -> { 
+  +(e: T): Stack[T] -> {
     .match(m) -> m.elem(e, this);
     .fold(start, f) -> f#(this.fold(start, f), e);
     .map(f) -> this.map(f) + ( f#(e) );
@@ -168,7 +168,7 @@ use base.Eight as Eight;
 use base.Nine  as Nine;
 use base.Ten   as Ten;
 
-"""; 
+""";
 @Test void inferStackGuideExampleBase(){okI("""
 p.StackMatch[T:imm, R:imm]:{'this .empty:R@p.StackMatch; .elem(T,p.Stack[T]):R@p.StackMatch;}
 p.Stack[T:imm]:{'this .match[R:imm](p.StackMatch[T,R]):R@p.Stack;(m)->m:?.empty():?; .fold[R:imm](R,base.F[R,T,R]):R@p.Stack;(start, f)->start:?; .map[R:imm](base.F[T,R]):p.Stack[R]@p.Stack;(f)->p._AStac:$?:?; .filter(base.F[T,base.Bool]):p.Stack[T]@p.Stack;(f)->p._BStac:$?:?; +(T):p.Stack[T]@p.Stack;(e)->p._DStac:$?{'_ ? .match[?](?):?@!;(m)->m:?.elem(e:?,this:?):?; ? .fold[?](?,?):?@!;(start, f)->f:?#(this:?.fold(start:?,f:?):?,e:?):?; ? .map[?](?):?@!;(f)->this:?.map(f:?):?+(f:?#(e:?):?):?; ? .filter[?](?):?@!;(f)->f:?#(e:?):?.if(p._CStac:$?{'_ ? .then[?]:?@!;->this:?.filter(f:?):?+(e:?):?; ? .else[?]:?@!;->this:?.filter(f:?):?;}:?):?;}:?;}
@@ -637,7 +637,7 @@ p.IdUser:{'this .m1(p.A):p.A@p.IdUser;(x)->x:?.a():?; .m2(read p.A):p.A@p.IdUser
 A:{
   imm .a:A->A;
   read .a:A->A;
-  mut .a:A->A; 
+  mut .a:A->A;
 }
 IdUser:{
   .m1(x:imm A):A->x.a;
@@ -685,7 +685,7 @@ User2:{ .bla(p:Point):base.Void -> Absorb#(p.x); }
 
 //TODO: this correctly shows that we can override a user defined type
 //.beer[imm,X] becomes .beer[imm,Err]
-//we will then merge back the user defined types when creating the core 
+//we will then merge back the user defined types when creating the core
 @Test void boundMustAlpha(){okI("""
 p.A:{'this .m[X:imm](p.Foo[X]):X@p.A;}
 p.B1[X:imm]:p.A{'this .m[_AX:imm](p.Foo[_AX]):_AX@p.B1;(z)->z:?.get():?;}
@@ -721,7 +721,7 @@ B:I{}
 Foo:{.get[T](a:T,b:T):T->a;}
 User:{.m:I->Foo.get(A,B)}
 """));}
-//But here we should keep the user specified type 
+//But here we should keep the user specified type
 @Test void recoverUserTypes2(){okI("""
 [###]~-----------
 ~mut p.A:p.I{'this }
@@ -936,7 +936,7 @@ User:{
   mut .go1[R:*](b: Box[R]): Dool -> b.f({aa,bb->Any#});
   mut .go2(b: Box[User]): Dool -> b.f({aa,bb->Any#});
 }
-"""));}//Then try again with b: mut Box[User]: the idea is that the inference should be tolerant of RCs when there is no other option 
+"""));}//Then try again with b: mut Box[User]: the idea is that the inference should be tolerant of RCs when there is no other option
 
 @Test void boundHidingSimplified(){okI("""
 p.Any:{'this #[T:imm]:T@p.Any;}
@@ -1199,7 +1199,7 @@ Main:{
 """,List.of("""
 Foo:{.capture:Foo}
 A[X]:{
-  .bar:Foo; 
+  .bar:Foo;
   .makeTrash:Foo->{.capture->this.bar}
   }
 """));}
@@ -1211,7 +1211,7 @@ A[X]:{
 """,List.of("""
 Foo[Z]:{.capture:Foo[Z]}
 A[X]:{
-  .bar[K]:Foo[K]; 
+  .bar[K]:Foo[K];
   .makeTrash[Z]:Foo[Z]->{.capture->this.bar}
   }
 """));}
@@ -1366,7 +1366,7 @@ User:{.go:Bool->
     .elem(e)->e.elem;
   });
 }
-"""));} 
+"""));}
 
 @Test void toStr(){okI("""
 [###]
@@ -1385,8 +1385,8 @@ Box[EE:*]: ToStr[EE]{
   .str by-> by#(this.get).str
   }
 A:ToStr{ .str->Str}
-Top:{ 
-  .m(b:Box[A]):Str -> b.str {::} 
+Top:{
+  .m(b:Box[A]):Str -> b.str {::}
   }
 """));}
 @Test void inferFromExpected_swap_ok(){ okI("""
@@ -1628,7 +1628,7 @@ Cannot infer signature of method ".turn".
 No supertype has a method named ".turn" with 0 parameters.
 Error 7 WellFormedness
 """,List.of("""
-North: {.turn-> East; } 
+North: {.turn-> East; }
 East : {.turn-> South;}
 South: {.turn-> West; }
 West : {.turn-> North;}

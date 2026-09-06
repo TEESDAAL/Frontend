@@ -40,7 +40,7 @@ public record Gamma(Gamma tail, String name, T t, Change current){
     return filterFTV(l,captureFree);
   }
   private Gamma filterFTV(Literal l,boolean captureFree){//we only care about dom(bs)
-    //Γ|Xs= {x : T | x : T ∈ Γ ∧ FTV(T) ⊆ Xs}
+    //\u0393|Xs= {x : T | x : T \u2208 \u0393 \u2227 FTV(T) \u2286 Xs}
     if (this == _empty){ return this; }
     var rest= tail.filterFTV(l,captureFree);
     if (captureFree){ return new Gamma(rest, name, t, Change.capFree(l,t)); }
@@ -56,5 +56,5 @@ public record Gamma(Gamma tail, String name, T t, Change current){
     case T.RCC(_, var c,_) -> c.ts().stream().allMatch(ti->hasOnlyFTV(ti,bs));
   };}
 }
-//Deliberately simple: Γ never gets deeper than 18 (2.33 on average), and all of its
-//map/filterFTV/bind work is ~2.4ms of a ~500ms compile of base. A flat or lazy Γ wins <1%.
+//Deliberately simple: \u0393 never gets deeper than 18 (2.33 on average), and all of its
+//map/filterFTV/bind work is ~2.4ms of a ~500ms compile of base. A flat or lazy \u0393 wins <1%.
