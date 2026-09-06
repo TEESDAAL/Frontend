@@ -895,7 +895,7 @@ A:{ .m({.a} Bob:X):X }
 @Test void err_illegal_nbsp_char(){fail("""
 In file: [###].fear
 
-001| A:{·.m():X }
+001| A:{\u00B7.m():X }
    |    ^
 
 While inspecting the file
@@ -959,7 +959,7 @@ Error 2 UnexpectedToken
 """,
 "A:{\u3000\u200B\u200F\u00A0.m():X }");
 }
-// 😀 first, then NBSP, ZWJ
+// \uD83D\uDE00 first, then NBSP, ZWJ
 @Test void err_illegal_emoji_and_more(){fail("""
 In file: [###].fear
 
