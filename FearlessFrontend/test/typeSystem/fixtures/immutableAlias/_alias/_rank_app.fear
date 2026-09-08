@@ -1,0 +1,20 @@
+use base.Var as Var;
+use base.Nat as Nat;
+
+Box[X:imm,mut]:{ mut .get:X; }
+Boxes:{ #(cell:mut Var[Nat]):mut Box[mut Var[Nat]] ->
+  mut Box[mut Var[Nat]]{ mut .get -> cell; }
+}
+User:{
+  .freeze(box:mut Box[mut Var[Nat]]):mut Box[imm Var[Nat]]->box;
+  .observe(cell:imm Var[Nat]):Nat->cell.get;
+}
+Hello:base.Main{sys -> base.Block#
+  .let[mut Var[Nat]] cell = {base.Vars#(0)}
+  .let[mut Box[mut Var[Nat]]] box = {Boxes#cell}
+  .let[imm Var[Nat]] frozen = {User.freeze(box).get}
+  .do{base.Debug#(User.observe(frozen))}
+  .do{cell.set(1)}
+  .do{base.Debug#(User.observe(frozen))}
+  .done
+}
