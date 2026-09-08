@@ -159,7 +159,7 @@ public record TypeSystem(TypeScope scope, ViewPointAdaptation v){
     return switch(m.e().get()){
       case X e -> e.name().equals(x);
       case Call c -> c.e() instanceof X e && e.name().equals(x) && c.name().equals(asOne)
-        && c.rc() == RC.imm && isBaseContainer(m.sig().ts().getFirst());
+        && isBaseContainer(m.sig().ts().getFirst());
       default -> false;
     };
   }
