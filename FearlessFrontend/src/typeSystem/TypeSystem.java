@@ -159,7 +159,7 @@ public record TypeSystem(TypeScope scope, ViewPointAdaptation v){
     return switch(m.e().get()){
       case X e -> e.name().equals(x);
       case Call c -> c.e() instanceof X e && e.name().equals(x) && c.name().equals(asOne)
-        && c.rc() == RC.imm && isBaseContainer(m.sig().ts().getFirst());
+        && isBaseContainer(m.sig().ts().getFirst());
       default -> false;
     };
   }
@@ -307,7 +307,7 @@ public record TypeSystem(TypeScope scope, ViewPointAdaptation v){
     if(a instanceof T.X ax && b instanceof T.RCX br && br.x().name().equals(ax.name())){ return redundantOnX(bs,br.rc(),ax.name()); }
     if(a instanceof T.RCX ar && b instanceof T.X bx && ar.x().name().equals(bx.name())){ return redundantOnX(bs,ar.rc(),bx.name()); }
     if(!(a instanceof T.RCC aa && b instanceof T.RCC bb)){ return false; }
-    if(!aa.c().name().equals(bb.c().name())){ return false; }
+    if(aa.rc() != bb.rc() || !aa.c().name().equals(bb.c().name())){ return false; }
     var as= aa.c().ts(); var bs2= bb.c().ts();
     assert as.size() == bs2.size();
     for(int i= 0; i < as.size(); i++){ if(!eqModXRC(bs,as.get(i),bs2.get(i))){ return false; } }

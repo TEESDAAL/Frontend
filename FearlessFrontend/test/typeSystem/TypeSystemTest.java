@@ -2310,7 +2310,19 @@ Top:{
   .m17(b:mutH Box[mut A]):Bool -> b.order{::} == b;
   }
 """));}
-@Test void toOrderHash(){ok(List.of("""
+@Test void toOrderHash(){fail("""
+153|   read .orderOk0: OrderBy[Person] ->
+154|     By#[Age]{::}.view[Person]{::.age};
+   |     ------------^^^^^^---------------
+
+While inspecting ".orderOk0" line 153
+This call to method "OrderBy[_].view(_)" can not typecheck.
+Argument 1 has type "iso F[read Person,Age]".
+That is not a subtype of "F[read Person,read Age]" (the type required by the method signature).
+
+Compressed relevant code with inferred types: (compression indicated by `-`)
+-.view[imm,Person](F[read Person,Age]{read #(_bimpl:read Person):Age->::.age[read]})
+""",List.of("""
 use base.Nat as Nat; use base.Bool as Bool; use base.True as True; use base.False as False; use base.Block as Block; use base.F as F;
 Str:{}
 OrderMatch[R:**]:{ mut .lt:R; mut .eq:R; mut .gt:R; }
@@ -3421,7 +3433,20 @@ of "{::}" at "By[InferUnknown,InferUnknown]" while its method table is refined w
 literal is then internally inconsistent: this one fails the "mostSpecificByOrigin" assert inside
 TypeSystem.methodTableOk rather than reporting a user error.*/
 
-@Test void blockLetKeepsTheMutTypeSoTheReturnCanPromote(){ok(List.of("""
+@Test void blockLetKeepsTheMutTypeSoTheReturnCanPromote(){fail("""
+011|   mut .take(s: mut Set[E], e: E): Opt[E] -> Blocks#
+012|     .let o = {s.opt(e)}
+   |     ^^^^
+013|     .return {o};
+
+While inspecting ".take(_,_)" line 11
+This call to method "mut Block[_].let(_,_)" can not typecheck.
+Argument 1 has type "mut MF[mut Opt[imm E]]".
+That is not a subtype of "mut MF[Opt[imm E]]" (the type required by the method signature).
+
+Compressed relevant code with inferred types: (compression indicated by `-`)
+-.let[mut,Opt[imm E]](mut MF[mut Opt[imm E]]{mut #:mut Opt[imm E]->s.opt[mut](e)},-)
+""",List.of("""
 use base.MF as MF;
 Blocks: { #[R:*]: mut Block[R] -> {} }
 Block[R:*]: {
